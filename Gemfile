@@ -46,7 +46,7 @@ gem "bootsnap", require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri windows ]
+  gem 'byebug'
   gem 'rspec-rails', '~> 6.1'
 end
 
@@ -62,6 +62,7 @@ group :development do
 end
 gem "bootstrap", "~> 5.3"
 gem "sass-rails", "~> 6"
+gem "will_paginate"
 
 group :development, :test do
   gem "dotenv-rails"
