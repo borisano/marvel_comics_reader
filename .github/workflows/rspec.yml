@@ -36,6 +36,8 @@ jobs:
         run: |
           gem install bundler
           bundle install --jobs 4 --retry 3
+      - name: Install JavaScript dependencies
+        run: yarn install
 
       - name: Run RSpec tests
         env:
