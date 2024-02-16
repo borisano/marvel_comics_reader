@@ -61,6 +61,7 @@ group :development do
   # gem "spring"
 end
 gem "bootstrap", "~> 5.3"
+gem "sass-rails", "~> 6"
 
 group :development, :test do
   gem "dotenv-rails"
