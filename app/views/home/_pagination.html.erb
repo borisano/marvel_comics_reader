@@ -1,0 +1,13 @@
+<% if total_pages > 1 %>
+  <nav aria-label="Pagination">
+    <ul class="flex items-center space-x-2">
+      <% 1.upto(total_pages) do |page| %>
+        <li>
+          <a href="?page=<%= page %>" class="<%= page == current_page ? 'active bg-gray-200' : '' %> px-2 py-1 rounded-md">
+            <%= page %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
+<% end %>
