@@ -3,12 +3,12 @@ require 'net/http'
 
 RSpec.describe MarvelApiService, type: :service do
   describe '.fetch' do
-    let(:limit) { 100 }
+    let(:limit) { 15 }
     let(:page) { 0 }
 
     context 'when API request is successful' do
       let(:offset) { page * limit }
-      let(:url) { MarvelApiService.send(:build_url, offset, limit) }
+      let(:url) { MarvelApiService.send(:build_url, page, limit) }
       let(:response_body) { { 'data' => { 'results' => [{ 'title' => 'Comic 1', 'issueNumber' => 1, 'images' => [{ 'path' => 'path', 'extension' => 'jpg' }], 'dates' => [] }] } }.to_json }
       let(:response) { Net::HTTPSuccess.new('1.1', '200', 'OK') }
       let(:expected_comics) { [{ title: 'Comic 1', issue_number: 1, cover_url: 'path.jpg', dates: [] }] }
@@ -27,7 +27,7 @@ RSpec.describe MarvelApiService, type: :service do
 
     context 'when API request fails' do
       let(:offset) { page * limit }
-      let(:url) { MarvelApiService.send(:build_url, offset, limit) }
+      let(:url) { MarvelApiService.send(:build_url, page, limit) }
       let(:response) { Net::HTTPBadRequest.new('1.1', '400', 'Bad Request') }
 
       before do

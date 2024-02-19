@@ -1,7 +1,7 @@
 require 'net/http'
 require 'uri'
 require 'json'
-require 'digest/md5' # Add missing import
+require 'digest/md5'
 
 class MarvelApiService
 
@@ -9,8 +9,8 @@ class MarvelApiService
   MARVEL_PUBLIC_KEY = ENV['MARVEL_PUBLIC_KEY']
   MARVEL_PRIVATE_KEY = ENV['MARVEL_PRIVATE_KEY']
 
-  def self.fetch(limit = 15, page = 0)
-    offset = page * limit
+  def self.fetch(page = 1,limit = 15)
+    offset = (page - 1) * limit # so that page 1 starts at offset 0, page 2 at 15, etc.
     comics = []
 
     url = build_url(offset, limit)
