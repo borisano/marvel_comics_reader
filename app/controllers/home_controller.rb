@@ -1,6 +1,6 @@
 class HomeController < ApplicationController
   def index
-    @comics = MarvelApiService.fetch_chronological_comics
+    @comics = MarvelApiService.fetch
   end
 
   def about

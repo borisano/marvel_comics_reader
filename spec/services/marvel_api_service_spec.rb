@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'net/http'
 
 RSpec.describe MarvelApiService, type: :service do
-  describe '.fetch_chronological_comics' do
+  describe '.fetch' do
     let(:limit) { 100 }
     let(:page) { 0 }
 
@@ -19,7 +19,7 @@ RSpec.describe MarvelApiService, type: :service do
       # end
 
       it 'returns the chronological comics' do
-        comics = MarvelApiService.fetch_chronological_comics(limit, page)
+        comics = MarvelApiService.fetch(limit, page)
         byebug
         expect(comics).to eq(expected_comics)
       end
@@ -35,7 +35,7 @@ RSpec.describe MarvelApiService, type: :service do
       end
 
       it 'prints an error message' do
-        expect { MarvelApiService.fetch_chronological_comics(limit, page) }.to output("Error fetching comics: #{response.code}\n").to_stdout
+        expect { MarvelApiService.fetch(limit, page) }.to output("Error fetching comics: #{response.code}\n").to_stdout
       end
     end
   end

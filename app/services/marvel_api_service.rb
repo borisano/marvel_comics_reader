@@ -9,7 +9,7 @@ class MarvelApiService
   MARVEL_PUBLIC_KEY = ENV['MARVEL_PUBLIC_KEY']
   MARVEL_PRIVATE_KEY = ENV['MARVEL_PRIVATE_KEY']
 
-  def self.fetch_chronological_comics(limit = 15, page = 0)
+  def self.fetch(limit = 15, page = 0)
     offset = page * limit
     comics = []
 
