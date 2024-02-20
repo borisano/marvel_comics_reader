@@ -5,7 +5,7 @@
     <div class="col-12 text-center py-3">
       <%= image_tag 'marvel_logo.png', alt: 'Marvel Logo', class: 'mb-3' %>
       <h1>Comics</h1>
-      <%= form_with(url: 'comics_path', method: :get, local: true, html: { class: 'form-inline justify-content-center' }) do |form| %>
+      <%= form_with(url: 'comics_path', method: :get, html: { class: 'form-inline justify-content-center' }) do |form| %>
         <div class="form-group">
           <%= form.label :search, 'Search for a comic', class: 'mr-2' %>
           <%= form.text_field :search, value: params[:search], class: 'form-control mr-2' %>
@@ -15,28 +15,7 @@
     </div>
   </div>
 
-  <div class="row">
-    <% @comics.each_slice(5) do |comics_row| %>
-      <div class="row">
-        <% comics_row.each do |comic| %>
-          <div class="col-2">
-            <%= render partial: 'comic', locals: { comic: comic } %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="row">
-    <div class="col-6">
-      <% if @page > 1 %>
-        <%= link_to 'Previous Page', url_for(page: @page - 1), class: 'btn btn-primary' %>
-      <% else %>
-        <%= link_to 'Previous Page', '#', class: 'btn btn-primary disabled', aria_disabled: true %>
-      <% end %>
-    </div>
-    <div class="col-6 text-right">
-      <%= link_to 'Next Page', url_for(page: @page + 1), class: 'btn btn-primary' %>
-    </div>
-  </div>
+  <turbo-frame id="comics_frame" src="<%= comics_frame_home_index_path %>">
+    Loading comics list...
+  </turbo-frame>
 </div>
