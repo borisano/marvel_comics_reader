@@ -62,7 +62,6 @@ group :development do
 end
 gem "bootstrap", "~> 5.3"
 gem "sass-rails", "~> 6"
-gem "will_paginate"
 
 group :development, :test do
   gem "dotenv-rails"
