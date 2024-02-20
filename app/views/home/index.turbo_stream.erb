@@ -1,0 +1,22 @@
+
+<%= turbo_stream.update("comics_list") do %>
+  <%= render 'comics_list' %>
+<% end %>
+<!-- update the pagination turbo_frame with the current pagination offset -->
+<%= turbo_stream.update "comics_pagination" do %>
+  <div class="row">
+    <div class="col-4">
+      <% if @page > 1 %>
+        <%= link_to 'Previous Page', home_index_path(page: @page - 1), data: {turbo_stream: true}, class: 'btn btn-primary' %>
+      <% else %>
+        <%= link_to 'Previous Page', '#', class: 'btn btn-primary disabled', aria_disabled: true %>
+      <% end %>
+    </div>
+    <div class="col-4">
+      Current page is <%= @page %>
+    </div>
+    <div class="col-4 text-right">
+      <%= link_to 'Next Page', home_index_path(page: @page + 1), data: {turbo_stream: true}, class: 'btn btn-primary' %>
+    </div>
+  </div>
+<% end %>

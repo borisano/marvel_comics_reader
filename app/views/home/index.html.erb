@@ -15,7 +15,8 @@
     </div>
   </div>
 
-  <turbo-frame id="comics_frame" src="<%= comics_frame_home_index_path %>" data-turbo-action="replace">
+  <%= turbo_frame_tag "comics_list", src: home_index_path(format: :turbo_stream, page: @page), loading: "lazy" do %>
     Loading comics list...
-  </turbo-frame>
+  <% end %>
+  <%= turbo_frame_tag "comics_pagination" %>
 </div>

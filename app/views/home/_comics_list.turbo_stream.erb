@@ -1,0 +1,14 @@
+
+<turbo-frame id="comics_frame">
+  <div class="row">
+    <% @comics.each_slice(5) do |comics_row| %>
+      <div class="row">
+        <% comics_row.each do |comic| %>
+          <div class="col-2">
+            <%= render partial: 'comic', locals: { comic: comic } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</turbo-frame>

@@ -4,10 +4,15 @@ class HomeController < ApplicationController
 
   def index
     @comics = MarvelApiService.fetch(@page, @per_page)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   def comics_frame
-    @comics = MarvelApiService.fetch(params[:page].to_i)
+    @comics = MarvelApiService.fetch(@page, @per_page)
 
     render partial: "comics_frame", locals: { comics: @comics, page: @page }
   end
@@ -19,11 +24,11 @@ class HomeController < ApplicationController
 
   def set_page
     @page = params[:page].to_i
-    @page = 1 if @page.zero?
+    @page = 1 if @page < 1
   end
 
   def set_per_page
     @per_page = params[:per_page].to_i
-    @per_page = 15 if @per_page.zero?
+    @per_page = 15 if @per_page < 1
   end
 end
