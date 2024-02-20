@@ -16,22 +16,27 @@
 </div>
 
 <div class="row">
-  <turbo-frame id="comics_frame">
-    <% @comics.each_slice(5) do |comics_row| %>
-      <div class="row">
-        <% comics_row.each do |comic| %>
-          <div class="col-2">
-            <%= render partial: 'comic', locals: { comic: comic } %>
-          </div>
-        <% end %>
-      </div>
-    <% end %>
-  </turbo-frame>
+  <% @comics.each_slice(5) do |comics_row| %>
+    <div class="row">
+      <% comics_row.each do |comic| %>
+        <div class="col-2">
+          <%= render partial: 'comic', locals: { comic: comic } %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
-  <div class="row">
-    <div class="col-12">
-      Pagination will be here
-    </div>
+<div class="row">
+  <div class="col-6">
+    <% if @page > 1 %>
+      <%= link_to 'Previous Page', url_for(page: @page - 1), class: 'btn btn-primary' %>
+    <% else %>
+      <%= link_to 'Previous Page', '#', class: 'btn btn-primary disabled', aria_disabled: true %>
+    <% end %>
   </div>
+  <div class="col-6 text-right">
+    <%= link_to 'Next Page', url_for(page: @page + 1), class: 'btn btn-primary' %>
+  </div>
+</div>
 </div>
