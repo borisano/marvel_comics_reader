@@ -53,8 +53,18 @@ class MarvelApiService
     data['data']['results'].map do |comic|
       {
         title: comic['title'],
-        cover_url: 'https://picsum.photos/200/300',  #comic['images']&.first&.fetch('path', '') + '.' + comic['images']&.first&.fetch('extension', ''),
+        description: comic['description'],
+        cover_url: self.extract_cover(comic),  #comic['images']&.first&.fetch('path', '') + '.' + comic['images']&.first&.fetch('extension', ''),
       }
+    end
+  end
+
+  def self.extract_cover(comic)
+    image = comic['images'].first
+    if image.present? # if image is present, return the full url string extension
+      image['path'] + '.' + image['extension']
+    else # if image is not present, return the 'no image'
+      'no_image.png'
     end
   end
 end

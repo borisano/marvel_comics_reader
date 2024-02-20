@@ -20,7 +20,6 @@ RSpec.describe MarvelApiService, type: :service do
 
       it 'returns the chronological comics' do
         comics = MarvelApiService.fetch(limit, page)
-        byebug
         expect(comics).to eq(expected_comics)
       end
     end
