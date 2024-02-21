@@ -5,7 +5,7 @@
     <div class="col-12 text-center py-3">
       <%= image_tag 'marvel_logo.png', alt: 'Marvel Logo', class: 'mb-3' %>
       <h1>Comics</h1>
-      <%= form_with(url: 'comics_path', method: :get, html: { class: 'form-inline justify-content-center' }) do |form| %>
+      <%= form_with(url: home_index_path(format: :turbo_stream), method: :get, html: { class: 'form-inline justify-content-center' }, data: { turbo_frame: 'comics_list' }) do |form| %>
         <div class="form-group">
           <%= form.label :search, 'Search for a comic', class: 'mr-2' %>
           <%= form.text_field :search, value: params[:search], class: 'form-control mr-2' %>
@@ -15,8 +15,8 @@
     </div>
   </div>
 
-  <%= turbo_frame_tag "comics_list", src: home_index_path(format: :turbo_stream, page: @page), loading: "lazy" do %>
+  <%= turbo_frame_tag "comics_list", src: home_index_path(format: :turbo_stream, page: @page) do %>
     Loading comics list...
   <% end %>
-  <%= turbo_frame_tag "comics_pagination" %>
+
 </div>
