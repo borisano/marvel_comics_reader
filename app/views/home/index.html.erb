@@ -5,18 +5,16 @@
     <div class="col-12 text-center py-3">
       <%= image_tag 'marvel_logo.png', alt: 'Marvel Logo', class: 'mb-3' %>
       <h1>Comics</h1>
-      <%= form_with(url: home_index_path(format: :turbo_stream), method: :get, html: { class: 'form-inline justify-content-center' }, data: { turbo_frame: 'comics_list' }) do |form| %>
+      <%= form_with(url: home_index_path(), method: :get, html: { class: 'form-inline justify-content-center' }, data: { turbo_frame: 'comics_list', turbo_action: 'advance' }, remote: true) do |form| %>
         <div class="form-group">
-          <%= form.label :search, 'Search for a comic', class: 'mr-2' %>
+          <%= form.hidden_field :page, value: @page %>
           <%= form.text_field :search, value: params[:search], class: 'form-control mr-2' %>
-          <%= form.submit 'Search', class: 'btn btn-primary' %>
         </div>
       <% end %>
     </div>
   </div>
 
-  <%= turbo_frame_tag "comics_list", src: home_index_path(format: :turbo_stream, page: @page) do %>
+  <%= turbo_frame_tag "comics_list", src: home_index_path(format: :turbo_stream, page: @page, search: @search) do %>
     Loading comics list...
   <% end %>
-
 </div>

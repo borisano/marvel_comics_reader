@@ -5,7 +5,7 @@
   <div class="row">
     <div class="col-4">
       <% if @page > 1 %>
-        <%= link_to 'Previous Page', home_index_path(page: @page - 1), data: {turbo_action: 'advance'}, class: 'btn btn-primary' %>
+        <%= link_to 'Previous Page', home_index_path(page: @page - 1, search: @search), data: {turbo_action: 'advance'}, class: 'btn btn-primary' %>
       <% else %>
         <%= link_to 'Previous Page', '#', class: 'btn btn-primary disabled', aria_disabled: true %>
       <% end %>
@@ -14,7 +14,7 @@
       Current page is <%= @page %>
     </div>
     <div class="col-4 text-right">
-      <%= link_to 'Next Page bb', home_index_path(page: @page + 1), data: { turbo_action: 'advance'}, class: 'btn btn-primary' %>
+      <%= link_to 'Next Page', home_index_path(page: @page + 1, search: @search), data: { turbo_action: 'advance'}, class: 'btn btn-primary' %>
     </div>
   </div>
 <% end %>
