@@ -1,23 +1,15 @@
 class HomeController < ApplicationController
-  before_action :set_page, only: [:index, :comics_frame]
-  before_action  :set_per_page, only: [:index, :comics_frame]
+  before_action :set_page, only: [:index]
+  before_action  :set_per_page, only: [:index]
 
   def index
-    @comics = MarvelApiService.fetch(@page, @per_page)
+    @search = params[:search]
+    @comics = MarvelApiService.fetch(page: @page, limit: @per_page, search: @search)
 
     respond_to do |format|
       format.html
       format.turbo_stream
     end
-  end
-
-  def comics_frame
-    @comics = MarvelApiService.fetch(@page, @per_page)
-
-    render partial: "comics_frame", locals: { comics: @comics, page: @page }
-  end
-
-  def about
   end
 
   protected
