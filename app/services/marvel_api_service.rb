@@ -9,17 +9,19 @@ class MarvelApiService
   MARVEL_PUBLIC_KEY = ENV['MARVEL_PUBLIC_KEY']
   MARVEL_PRIVATE_KEY = ENV['MARVEL_PRIVATE_KEY']
 
-  def self.fetch(page = 1,limit = 15)
+  COMICS_URL = "https://gateway.marvel.com:443/v1/public/comics"
+  CHARACTERS_URL = "https://gateway.marvel.com:443/v1/public/characters"
+
+  def self.fetch(page: 1, limit: 15, search: nil)
     offset = (page - 1) * limit # so that page 1 starts at offset 0, page 2 at 15, etc.
     comics = []
 
-    url = build_url(offset, limit)
+    url = build_url(offset, limit, search)
     response = make_api_request(url)
 
     if response.is_a?(Net::HTTPSuccess)
       data = JSON.parse(response.body)
       comics = extract_comics(data)
-      #comics.sort_by { |comic| comic['dates'].first['date'] }
     else
       puts "Error fetching comics: #{response.code}"
     end
@@ -33,11 +35,31 @@ class MarvelApiService
     Digest::MD5.hexdigest(ts + MARVEL_PRIVATE_KEY + MARVEL_PUBLIC_KEY)
   end
 
-  def self.build_url(offset, limit)
+  def self.build_url(offset, limit, search)
     ts = Time.now.to_i.to_s
-    uri = URI("https://gateway.marvel.com:443/v1/public/comics")
+    uri = URI(COMICS_URL)
     uri.query = "orderBy=issueNumber&limit=#{limit}&offset=#{offset}&ts=#{ts}&apikey=#{MARVEL_PUBLIC_KEY}&hash=#{self.hash(ts)}"
+
+    if search.present?
+      character_id = get_character_id(search)
+
+      if character_id.present?
+        uri.query += "&characters=#{character_id}"
+      else # if character_id is not present, search by title
+        uri.query += "&titleStartsWith=#{CGI::escape search}"
+      end
+    end
+
     uri
+  end
+
+  def self.get_character_id(search_term)
+    ts = Time.now.to_i.to_s
+    uri = URI("#{CHARACTERS_URL}?name=#{search_term}&ts=#{ts}&apikey=#{MARVEL_PUBLIC_KEY}&hash=#{hash(ts)}")
+    response = Net::HTTP.get(uri)
+    data = JSON.parse(response)
+    # todo handle case when no character is found
+    character_id = data.dig('data', 'results', 0, 'id')
   end
 
   def self.make_api_request(url)
@@ -54,7 +76,7 @@ class MarvelApiService
       {
         title: comic['title'],
         description: comic['description'],
-        cover_url: self.extract_cover(comic),  #comic['images']&.first&.fetch('path', '') + '.' + comic['images']&.first&.fetch('extension', ''),
+        cover_url: self.extract_cover(comic)
       }
     end
   end
@@ -63,7 +85,7 @@ class MarvelApiService
     image = comic['images'].first
     if image.present? # if image is present, return the full url string extension
       image['path'] + '.' + image['extension']
-    else # if image is not present, return the 'no image'
+    else # if image is not there, return the 'no image'
       'no_image.png'
     end
   end

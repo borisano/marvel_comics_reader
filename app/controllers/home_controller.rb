@@ -4,7 +4,7 @@ class HomeController < ApplicationController
 
   def index
     @search = params[:search]
-    @comics = MarvelApiService.fetch(@page, @per_page)
+    @comics = MarvelApiService.fetch(page: @page, limit: @per_page, search: @search)
 
     respond_to do |format|
       format.html
