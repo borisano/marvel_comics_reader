@@ -1,2 +1,4 @@
-<%= image_tag comic[:cover_url], class: 'img-fluid' %>
-<h5><%= comic[:title] %></h5>
+<div class="comic" data-comic-id="<%= comic[:id] %>">
+  <%= image_tag comic[:cover_url], class: 'img-fluid' %>
+  <h5><%= comic[:title] %></h5>
+</div>

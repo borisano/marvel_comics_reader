@@ -74,6 +74,7 @@ class MarvelApiService
   def self.extract_comics(data)
     data['data']['results'].map do |comic|
       {
+        id: comic['id'],
         title: comic['title'],
         description: comic['description'],
         cover_url: self.extract_cover(comic)
