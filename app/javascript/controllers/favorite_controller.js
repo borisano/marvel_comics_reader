@@ -1,10 +1,10 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["favButton", "favCount"]
+  static targets = ["favButton", "favCount", "favIcon"]
 
   connect() {
-    this.updateFavIcon();
+    this.setFavIcon();
   }
 
   toggleFav() {
@@ -16,14 +16,19 @@ export default class extends Controller {
     this.updateFavIcon(newFavValue);
   }
 
+  setFavIcon() {
+    currentValue = this.data.get('is-favorite');
+    this.updateFavIcon(currentValue);
+  }
+
   updateFavIcon(newFavValue) {
     // Update the button classes
     if (newFavValue === '1') {
-      this.favButtonTarget.classList.remove('fav-off');
-      this.favButtonTarget.classList.add('fav-on');
+      this.favIconTarget.classList.remove('fav-off');
+      this.favIconTarget.classList.add('fav-on');
     } else {
-      this.favButtonTarget.classList.remove('fav-on');
-      this.favButtonTarget.classList.add('fav-off');
+      this.favIconTarget.classList.remove('fav-on');
+      this.favIconTarget.classList.add('fav-off');
     }
   }
 
