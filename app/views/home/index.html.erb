@@ -46,11 +46,11 @@
 }
 
 .fav-icon.fav-on {
-  background-image: url('assets/heart_on.png');
+  background-image: url(<%= asset_path 'heart_on.png' %>);
 }
 
 .fav-icon.fav-off {
-  background-image: url('assets/heart_off.png');
+  background-image: url(<%= asset_path 'heart_off.png' %>);
 }
 
 .fav-count {
@@ -61,6 +61,6 @@
 }
 
 .fav-button:hover .fav-icon {
-  background-image: url('assets/heart_hover.png');
+  background-image: url(<%= asset_path 'heart_hover.png' %>);
 }
 </style>
