@@ -10,7 +10,7 @@ class HomeController < ApplicationController
       MarvelApiService.fetch(page: @page, limit: @per_page, search: @search)
     end
 
-    @comics = ComicsFavFetcherService.fetch(@comics)
+    @comics = FavService.get_favs(@comics)
 
     respond_to do |format|
       format.html
