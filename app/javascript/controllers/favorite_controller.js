@@ -17,7 +17,7 @@ export default class extends Controller {
   }
 
   setFavIcon() {
-    currentValue = this.data.get('is-favorite');
+    var currentValue = this.data.get('is-favorite');
     this.updateFavIcon(currentValue);
   }
 
