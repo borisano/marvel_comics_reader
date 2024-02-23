@@ -38,7 +38,7 @@ class MarvelApiService
   def self.build_url(offset, limit, search)
     ts = Time.now.to_i.to_s
     uri = URI(COMICS_URL)
-    uri.query = "orderBy=issueNumber&limit=#{limit}&offset=#{offset}&ts=#{ts}&apikey=#{MARVEL_PUBLIC_KEY}&hash=#{self.hash(ts)}"
+    uri.query = "orderBy=-onsaleDate&limit=#{limit}&offset=#{offset}&ts=#{ts}&apikey=#{MARVEL_PUBLIC_KEY}&hash=#{self.hash(ts)}"
 
     if search.present?
       character_id = get_character_id(search)
