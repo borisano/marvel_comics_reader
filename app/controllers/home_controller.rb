@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   before_action :set_search, only: [:index]
   before_action :set_user_id, only: [:fav, :unfav]
 
-  before_action :set_comic, only: [:fav, :unfav]
+  before_action :set_comic, only: [:fav, :unfav, :fav_status]
 
   def index
     # Cache to speed things up and (mainly), to avoid hitting the Marvel API rate limit
@@ -13,7 +13,7 @@ class HomeController < ApplicationController
       MarvelApiService.fetch(page: @page, limit: @per_page, search: @search)
     end
 
-    @comics = FavService.add_favs(@comics)
+    @comics = FavService.fetch_favs(@comics)
 
     respond_to do |format|
       format.html
@@ -41,6 +41,13 @@ class HomeController < ApplicationController
     end
   rescue => e
     render json: { error: e.message, is_favorited: true }, status: :internal_server_error
+  end
+
+  def fav_status
+    is_favorited = FavService.favorited?(params[:user_id], params[:comic_id])
+    render json: { is_favorited: is_favorited }, status: :ok
+  rescue => e
+    render json: { error: e.message, is_favorited: false }, status: :internal_server_error
   end
 
   protected

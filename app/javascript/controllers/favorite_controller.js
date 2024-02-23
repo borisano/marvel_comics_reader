@@ -37,8 +37,15 @@ export default class extends Controller {
   }
 
   setFavIcon() {
-    var currentValue = this.data.get('is-favorite');
-    this.updateFavIcon(currentValue);
+    const userId = localStorage.getItem('userId');
+    const comicId = this.data.get("comicId"); // Assuming comicId is stored in data
+    const url = `home/fav_status?user_id=${userId}&comic_id=${comicId}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        this.updateFavIcon(data.is_favorited ? '1' : '0');
+      });
   }
 
   updateFavIcon(newFavValue) {

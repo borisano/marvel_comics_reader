@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resources :home, only: [:index] do
     collection do
+      get 'fav_status', to: 'home#fav_status', as: 'fav_status'
       post ':id/fav', to: 'home#fav', as: 'fav'
       delete ':id/fav', to: 'home#unfav', as: 'unfav'
     end
