@@ -1,2 +1,16 @@
-<%= image_tag comic[:cover_url], class: 'img-fluid' %>
-<h5><%= comic[:title] %></h5>
+<div class="comic" data-controller="favorite" data-favorite-comic-id="<%= comic[:id] %>" data-favorite-is-favorite="<%= comic[:favorited] ? '1' : '0' %>">
+  <div class="comic-image-container">
+    <%= image_tag comic[:cover_url], class: 'img-fluid' %>
+    <button data-favorite-target="favButton"
+            data-action="click->favorite#toggleFav"
+            class="fav-button">
+      <span id="comic_<%= comic[:id] %>_fav_count" data-favorite-target="favCount" class="fav-count">
+        <%= render partial: 'home/fav_count', locals: { fav_count: comic[:fav_count], comic_id: comic[:id] } %>
+      </span>
+      <%= turbo_stream_from "comic_#{comic[:id]}_fav_count" %>
+
+      <span data-favorite-target="favIcon" class="fav-icon"></span>
+    </button>
+  </div>
+  <h5><%= comic[:title] %></h5>
+</div>

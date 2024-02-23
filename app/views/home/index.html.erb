@@ -1,6 +1,6 @@
 <%= content_for :title, 'Home' %>
 
-<div class="container">
+<div class="container" data-controller="identifier">
   <div class="row text-white searchbar">
     <div class="col-12 text-center py-3">
       <%= image_tag 'marvel_logo.png', alt: 'Marvel Logo', class: 'mb-3' %>
@@ -18,3 +18,49 @@
     Loading comics list...
   <% end %>
 </div>
+
+<style>
+.comic-image-container {
+  position: relative;
+}
+
+.img-fluid {
+  width: 100%;
+}
+
+.fav-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+}
+
+.fav-icon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.fav-icon.fav-on {
+  background-image: url('assets/heart_on.png');
+}
+
+.fav-icon.fav-off {
+  background-image: url('assets/heart_off.png');
+}
+
+.fav-count {
+  background-color: lightgrey;
+  padding: 5px;
+  border-radius: 5px;
+  color: black;
+}
+
+.fav-button:hover .fav-icon {
+  background-image: url('assets/heart_hover.png');
+}
+</style>
