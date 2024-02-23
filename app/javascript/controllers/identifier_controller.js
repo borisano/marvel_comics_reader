@@ -6,10 +6,10 @@ export default class extends Controller {
   }
 
   checkIdentifier() {
-    let uniqueId = localStorage.getItem('uniqueId');
+    let uniqueId = localStorage.getItem('userId');
     if (!uniqueId) {
       uniqueId = this.generateUniqueId();
-      localStorage.setItem('uniqueId', uniqueId);
+      localStorage.setItem('userId', uniqueId);
     }
   }
 
