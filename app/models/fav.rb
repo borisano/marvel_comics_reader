@@ -2,7 +2,11 @@ class Fav < ApplicationRecord
   validates :user_id, uniqueness: { scope: :comic_id }
 
   def self.fav_count(comic_id)
-    where(comic_id: comic_id).count
+    if comic_id.is_a?(Array)
+      where(comic_id: comic_id).group(:comic_id).count
+    else
+      where(comic_id: comic_id).count
+    end
   end
 
   def self.favorited?(user_id, comic_id)

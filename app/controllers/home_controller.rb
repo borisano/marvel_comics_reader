@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   before_action :set_page, only: [:index]
   before_action  :set_per_page, only: [:index]
   before_action :set_search, only: [:index]
+  before_action :set_user_id, only: [:fav, :unfav]
 
   before_action :set_comic, only: [:fav, :unfav]
 

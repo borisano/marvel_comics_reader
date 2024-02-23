@@ -1,10 +1,15 @@
 class FavService
   def self.add_favs(comics)
+    comic_ids = comics.map { |comic| comic[:id].to_s }
+    favs = Fav.fav_count(comic_ids)
+
     comics = comics.map do |comic|
       comic[:favorited] = [true, false].sample
-      comic[:fav_count] = rand(100)
+      comic[:fav_count] = favs.fetch(comic[:id].to_s, 0)
       comic
     end
+
+    return comics
   end
 
   def self.favorite(user_id, comic_id)
