@@ -15,6 +15,7 @@ test:
 
 production:
   <<: *default
+  url: <%= ENV['DATABASE_URL'] %>
   database: marvel_comics_reader_production
   username: marvel_comics_reader
   password: <%= ENV["MARVEL_COMICS_READER_DATABASE_PASSWORD"] %>
